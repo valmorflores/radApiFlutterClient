@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:radapiconsumer/utils/wks_custom_dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 
@@ -17,7 +18,7 @@ class EIAPITableDatasource implements TableDatasource {
       List<TableModel> table = [];
       var dados = res.data['data'];
       dados.forEach((item) {
-        table.add(TableModel.fromJson(item));
+        table.add(TableModel(id: 0, name: item));
       });
       debugPrint('f1902 - Saving local table...');
       SharedPreferences prefs = await SharedPreferences.getInstance();

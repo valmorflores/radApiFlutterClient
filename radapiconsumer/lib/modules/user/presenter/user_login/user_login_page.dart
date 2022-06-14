@@ -1,3 +1,6 @@
+import 'package:radapiconsumer/modules/table/presenter/table_list_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '/modules/user/presenter/controllers/user_controller.dart';
 import '/utils/globals.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +80,6 @@ class UserLoginPage extends StatelessWidget {
                                       obscureText: true,
                                       enableSuggestions: false,
                                       autocorrect: false,
-                                      
                                     ),
                                   ),
                                 ],
@@ -92,7 +94,19 @@ class UserLoginPage extends StatelessWidget {
                                 email: _emailController.text,
                                 password: _passwordController.text,
                               );
-                              Navigator.pop(context);
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              var token = prefs.getString('token');
+                              var isNotEmpty = token?.isNotEmpty;
+                              if (isNotEmpty!) {
+                                await Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                      builder: (context) => TableListPage()),
+                                );
+                              } else {
+                                Navigator.pop(context);
+                              }
                             },
                             child: Icon(Icons.check),
                           )
