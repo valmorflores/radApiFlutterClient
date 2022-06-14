@@ -1,22 +1,20 @@
-import 'dart:io';
-
 import '/modules/user/presenter/controllers/user_controller.dart';
 import '/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserLoginPage extends StatelessWidget {
-  UserController _userController = Get.put(UserController());
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
+  final UserController _userController = Get.put(UserController());
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   final int staffid;
   UserLoginPage(this.staffid, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    _firstNameController.text = 'valmorflores@gmail.com';
-    _lastNameController.text = '';
+    _emailController.text = 'valmorflores@gmail.com';
+    _passwordController.text = '';
 
     return Scaffold(
         body: Container(
@@ -34,28 +32,28 @@ class UserLoginPage extends StatelessWidget {
                               height: 200,
                               child: ListView(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 12,
                                   ),
                                   ListTile(
                                     title: Text(
                                       'Dados pessoais em ${app_selected_workspace_name}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600),
                                     ),
-                                    subtitle: Text(
+                                    subtitle: const Text(
                                       'As informações a seguir aparecerão específicamente neste ambiente. Para cada workspace você pode se identificar como preferir.',
                                       style: TextStyle(fontSize: 11),
                                     ),
                                   ),
                                   ListTile(
-                                    title: Text(
+                                    title: const Text(
                                       'Usuário/Login',
                                       style: TextStyle(fontSize: 11),
                                     ),
                                     subtitle: TextField(
-                                      controller: _firstNameController,
+                                      controller: _emailController,
                                       decoration: InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.search,
@@ -70,23 +68,16 @@ class UserLoginPage extends StatelessWidget {
                                     ),
                                   ),
                                   ListTile(
-                                    title: Text(
+                                    title: const Text(
                                       'Senha',
                                       style: TextStyle(fontSize: 11),
                                     ),
                                     subtitle: TextField(
-                                      controller: _lastNameController,
-                                      decoration: InputDecoration(
-                                        suffixIcon: Icon(
-                                          Icons.search,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onBackground,
-                                          size: 20.0,
-                                        ),
-                                        border: InputBorder.none,
-                                        hintText: 'Filtro',
-                                      ),
+                                      controller: _passwordController,
+                                      obscureText: true,
+                                      enableSuggestions: false,
+                                      autocorrect: false,
+                                      
                                     ),
                                   ),
                                 ],
@@ -98,8 +89,8 @@ class UserLoginPage extends StatelessWidget {
                           FloatingActionButton(
                             onPressed: () async {
                               await _userController.userPostLogin(
-                                email: _firstNameController.text,
-                                password: _lastNameController.text,
+                                email: _emailController.text,
+                                password: _passwordController.text,
                               );
                               Navigator.pop(context);
                             },

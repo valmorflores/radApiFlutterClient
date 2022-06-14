@@ -42,7 +42,7 @@ class UserController extends GetxController {
   }
 
   _postUserLogin(String _email, _password) async {
-    debugPrint('f8004 - Patch firstname: $_email, lastname: $_password ');
+    debugPrint('f8004 - email: $_email, password: $_password ');
     UserLoginImpl _userLoginImpl = UserLoginImpl(loginRepository);
     return await _userLoginImpl.call(_email, _password);
   }

@@ -17,9 +17,14 @@ class UserLoginImpl implements PostUserLogin {
   Future<Either<Failure, List<UserLoginResult>>> call(
       String email, String password) async {
     var option = optionOf(email);
+    if (email.isEmpty) {
+      return Left(ErrorEmptyEmail());
+    }
+    if (password.isEmpty) {
+      return Left(ErrorEmptyPassword());
+    }
     return option.fold(() => Left(InvalidSearchText()), (email) async {
       var result = await repository.postLogin(email, password);
-
       return result.fold(
           (l) => left(l), (r) => r.isEmpty ? left(EmptyList()) : right(r));
     });
