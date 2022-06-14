@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:radapiconsumer/modules/connection/presenter/list_connection/list_connection_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/core/helpers/route_generator.dart';
 import '/routes.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       //darkTheme: SystemThemeData.darkThemeData1,
       themeMode: ThemeMode.system,
       onGenerateRoute: RouteGenerator.generateRoute,
-      home: const DefaultTabController(length: 4, child: MyWelcomePage()),
+      home: DefaultTabController(length: 4, child: ListConnectionPage()),
     );
   }
 }
