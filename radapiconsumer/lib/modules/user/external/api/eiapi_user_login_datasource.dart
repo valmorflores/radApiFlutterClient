@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/errors/errors.dart';
 import '../../infra/datasources/user_login_datasource.dart';
 import '../../infra/models/user_login_model.dart';
@@ -35,6 +36,11 @@ class EIAPIUserLoginDatasource implements UserLoginDatasource {
         List<UserLoginModel> staffs = <UserLoginModel>[];
         staffs
             .add(UserLoginModel(active: true, staffId: staffId, token: token));
+
+        if (token != '') {
+          saveToken(token);
+        }
+
         debugPrint('f1252 - done');
         return staffs;
       });
@@ -51,5 +57,10 @@ class EIAPIUserLoginDatasource implements UserLoginDatasource {
         throw ErrorApiError();
       }
     }
+  }
+
+  saveToken(token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
   }
 }
