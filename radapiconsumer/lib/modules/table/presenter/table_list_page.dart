@@ -34,7 +34,7 @@ class TableListPage extends StatelessWidget {
 
   ListTile buildListTile(BuildContext context, TableModel _tableModel) {
     return ListTile(
-        title: Text('_tableModel.name'),
+        title: Text(_tableModel.name ?? ''),
         onTap: () {
           /*_tableController.process(saveServer);
           Navigator.push(
