@@ -1,1 +1,0 @@
-const kTblClients = 'tblclients';

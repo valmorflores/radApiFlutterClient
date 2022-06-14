@@ -1,1 +1,0 @@
-const kMaxWidthDiaskCachedImages = 150;
