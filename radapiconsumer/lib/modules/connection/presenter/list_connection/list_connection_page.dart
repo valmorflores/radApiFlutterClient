@@ -91,7 +91,9 @@ Container(
 
   ListTile buildListTile(BuildContext context, SaveServer saveServer) {
     return ListTile(
-        tileColor: saveServer.working ? Colors.red : Colors.yellow,
+        tileColor: saveServer.working
+            ? Color.fromARGB(255, 156, 193, 242)
+            : Color.fromARGB(255, 129, 222, 214),
         title: Text(saveServer.name),
         subtitle: Text(saveServer.url),
         onTap: () {

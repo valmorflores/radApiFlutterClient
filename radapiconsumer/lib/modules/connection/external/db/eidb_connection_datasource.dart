@@ -61,16 +61,16 @@ class EIDBConnectionDatasource implements ConnectionDatasource {
     var dbTable =
         app_selected_workspace_name + kWorkspaceTblSeparator + kTblConnection;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var info = prefs.getString(dbTable);
-    var result = jsonDecode(info!);
-    var jsonList = result as List;
+    var jsonList = [];
     List<ConnectionModel> list = [];
-    debugPrint('f5800 - list with size => ' + jsonList.length.toString());
-    jsonList.forEach((item) {
-      list.add(ConnectionModel.fromJson(item));
-    });
+    try {
+      list = await getAll();
+    } catch (e) {
+      list = <ConnectionModel>[];
+    }
     list.add(connectionModel);
-    prefs.setString('dbTable', jsonEncode(list));
+    debugPrint('f5800 - list with size => ' + list.length.toString());
+    prefs.setString(dbTable, jsonEncode(list));
     return list;
   }
 

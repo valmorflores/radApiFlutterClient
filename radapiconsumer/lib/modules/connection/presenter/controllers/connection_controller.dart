@@ -24,6 +24,7 @@ class ConnectionController extends GetxController {
   late int selectedStaffId;
 
   final dio = WksCustomDio.withAuthentication().instance;
+
   late ConnectionDatasource datasource;
   late ConnectionRepository connectionRepository;
 
@@ -83,11 +84,8 @@ class ConnectionController extends GetxController {
 
   _doAddConnection(String _connection, String _description) async {
     debugPrint('f8004 - Connection: $_connection - $_description');
-    AddConnectionImpl _addConnectionImpl =
-        AddConnectionImpl(connectionRepository);
-
-    return await _addConnectionImpl
-        .call(ConnectionModel(id: 1, description: _description));
+    return await addConnection.call(
+        ConnectionModel(id: 1, description: _description, url: _connection));
   }
 
   @override
