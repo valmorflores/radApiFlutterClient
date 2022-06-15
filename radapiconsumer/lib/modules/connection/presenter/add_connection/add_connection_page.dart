@@ -19,6 +19,7 @@ class AddConnectionPage extends StatelessWidget {
     _urlController.text = 'http://localhost:89/dev/radApi/public/v1';
 
     return Scaffold(
+        appBar: AppBar(title: Text('Nova conexão a API')),
         body: Container(
             height: MediaQuery.of(context).size.height * 0.60,
             decoration:
@@ -45,7 +46,7 @@ class AddConnectionPage extends StatelessWidget {
                                           fontWeight: FontWeight.w600),
                                     ),
                                     subtitle: Text(
-                                      'As informações a seguir aparecerão específicamente neste ambiente. Para cada workspace você pode se identificar como preferir.',
+                                      'Deve-se indicar o endereço e nome do servidor para criar um link permanente de conexão.',
                                       style: TextStyle(fontSize: 11),
                                     ),
                                   ),
@@ -65,7 +66,7 @@ class AddConnectionPage extends StatelessWidget {
                                           size: 20.0,
                                         ),
                                         border: InputBorder.none,
-                                        hintText: 'Filtro',
+                                        hintText: 'Nome do servidor',
                                       ),
                                     ),
                                   ),
