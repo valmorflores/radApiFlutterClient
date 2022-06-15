@@ -34,6 +34,7 @@ class TableListPage extends StatelessWidget {
 
   ListTile buildListTile(BuildContext context, TableModel _tableModel) {
     return ListTile(
+        leading: Icon(Icons.grid_view),
         title: Text(_tableModel.name ?? ''),
         onTap: () {
           /*_tableController.process(saveServer);

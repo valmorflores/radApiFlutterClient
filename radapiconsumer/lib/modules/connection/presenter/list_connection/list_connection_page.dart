@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:radapiconsumer/modules/connection/presenter/add_connection/add_connection_page.dart';
+import 'package:radapiconsumer/modules/table/presenter/table_list_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../user/presenter/user_login/user_login_page.dart';
 import '../controllers/connection_controller.dart';
 import '/utils/globals.dart';
@@ -91,17 +93,27 @@ Container(
 
   ListTile buildListTile(BuildContext context, SaveServer saveServer) {
     return ListTile(
+        leading: Icon(Icons.storage),
         tileColor: saveServer.working
             ? Color.fromARGB(255, 156, 193, 242)
             : Color.fromARGB(255, 129, 222, 214),
         title: Text(saveServer.name),
         subtitle: Text(saveServer.url),
-        onTap: () {
+        onTap: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          var token = prefs.getString('token');
           _connectionController.process(saveServer);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => UserLoginPage(0)),
-          );
+          if (token == '') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => UserLoginPage(0)),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TableListPage()),
+            );
+          }
         });
   }
 }
