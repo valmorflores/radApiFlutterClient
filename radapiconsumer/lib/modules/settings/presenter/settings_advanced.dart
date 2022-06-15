@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import '/core/ui/layout/my_layout.dart';
-import '/global/repositories/login_repository.dart';
+
 import '/modules/settings/presenter/settings_advanced_help_assistent.dart';
 import '/modules/setup/infra/models/setup_install_vars.dart';
 import '/modules/setup/setup_load.dart';
@@ -260,7 +260,7 @@ class _SettingsAdvancedHomeState extends State<SettingsAdvancedHome> {
     debugPrint('f0207 - Remover demais configurações..');
     await prefs.clear();
     debugPrint('f0207 - Removendo userKey...');
-    await LoginRepository().removeUserKey();
+
     return;
   }
 }

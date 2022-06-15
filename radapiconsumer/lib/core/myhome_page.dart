@@ -19,7 +19,6 @@ import '/modules/menu/presenter/menu.dart';
 import '/modules/menu_left/domain/classes/wokspace_selector.dart';
 import '../core/enums/enum_awards.dart';
 import '../core/enums/enum_notifications.dart';
-import '../global/repositories/login_repository.dart';
 import '../global/resources/kconstants.dart';
 import '../modules/awards/presenter/view_award_component/award_component.dart';
 import '../modules/staff/presenter/staff/staff_home.dart';
@@ -184,20 +183,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     debugPrint('f0723 - _key' + userKey + '_is_valid' + _isValid);
     debugPrint('f0723 - _key' + userKey + '_is_active' + _isActive);
-    try {
-      final result = await LoginRepository().login();
-      //.then(
-      if (result) {
-        if (userKey != '') {
-          isInstalled = true;
-        }
-        //debugPrint(successCallback);
-        //    },
-        //onError: (e) {
-        //  debugPrint('f0723 - Display error-> ' + e.toString());
-        //});
-      }
-    } catch (e) {
+    try {} catch (e) {
       debugPrint('f0723 - Error in login');
       debugPrint('f0723 - Display error-> ' + e.toString());
     }

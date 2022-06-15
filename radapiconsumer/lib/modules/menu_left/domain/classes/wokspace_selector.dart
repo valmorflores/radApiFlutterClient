@@ -1,4 +1,3 @@
-import '/global/repositories/login_repository.dart';
 import '/global/resources/kconstants.dart';
 import '/modules/setup/infra/models/workspace_model.dart';
 import '/modules/setup/setup_load.dart';
@@ -11,13 +10,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class WorkspaceSelector {
   late Future<List<WorkspaceModel>> _workspaces;
-  late LoginRepository _loginRepository;
+
   UrlController urlController = Get.put(UrlController());
   final StaffController _staffController = Get.put(StaffController());
 
   // Construct
   WorkspaceSelector({Key? key}) {
-    _loginRepository = LoginRepository();
     _load();
   }
 
@@ -90,7 +88,7 @@ class WorkspaceSelector {
             app_workspace_name);
         // Login with key
         debugPrint('f6328 - LoginRepository->login() ' + app_userkey);
-        await _loginRepository.login();
+
         await urlController.loadUrls();
         await _staffController.loadStaffList();
         await _staffController.selectStaff(app_user.staffid ?? 0);

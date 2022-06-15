@@ -1,5 +1,5 @@
 import '/core/widgets/_widget_staff_avatar.dart';
-import '/global/repositories/login_repository.dart';
+
 import '/modules/setup/infra/models/workspace_model.dart';
 import '/modules/staff/presenter/controllers/staff_controller.dart';
 import '/modules/staff/presenter/staff_profile_editor/staff_profile_editor.dart';
@@ -22,13 +22,13 @@ class MenuLeftDrawer extends StatefulWidget {
 class _MenuLeftDrawerState extends State<MenuLeftDrawer> {
   late WorkspaceSelector _workspaceSelector;
   Future<List<WorkspaceModel>>? _workspaces;
-  late LoginRepository _loginRepository;
+
   StaffController _staffController = Get.put(StaffController());
 
   @override
   void initState() {
     _workspaceSelector = WorkspaceSelector();
-    _loginRepository = LoginRepository();
+
     loadSetupInfo();
     loadStaffInfo();
   }

@@ -1,4 +1,3 @@
-import '../../../global/repositories/login_repository.dart';
 import '../../../modules/workspaces/domain/errors/erros.dart';
 import '../../../modules/workspaces/domain/repositories/person_repository.dart';
 import '../../../modules/workspaces/domain/usecases/put_login.dart';
@@ -61,7 +60,7 @@ class _PersonLoginState extends State<PersonLogin> {
   }
 
   Future<bool> valid() async {
-    return await LoginRepository().isValidKey(app_userkey);
+    return true;
   }
 
   @override

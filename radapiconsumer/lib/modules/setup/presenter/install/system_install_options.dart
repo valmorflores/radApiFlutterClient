@@ -1,4 +1,3 @@
-import '/global/repositories/login_repository.dart';
 import '/modules/setup/presenter/install/page_install_user_code.dart';
 import '/utils/globals.dart';
 import '/core/widgets/_widget_page_title.dart';
@@ -80,7 +79,6 @@ class _SystemInstallOptionsState extends State<SystemInstallOptions> {
 
     if (result != "") {
       setState(() async {
-        await LoginRepository().setUserKey(result);
         isInstalled = true;
       });
     }

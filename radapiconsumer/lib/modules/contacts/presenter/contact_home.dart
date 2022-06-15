@@ -14,7 +14,7 @@ import '/modules/contacts/infra/models/contact_model.dart';
 import '/modules/contacts/infra/repositories/contact_repository_impl.dart';
 import '/modules/contacts/presenter/contact_detail_home.dart';
 import '/modules/contacts/external/api/direct_contacts_repository.dart';
-import '/global/repositories/login_repository.dart';
+
 import '/modules/contacts/presenter/controllers/contact_controller.dart';
 import '/modules/contacts/presenter/states/contacts_state.dart';
 import '/utils/globals.dart';

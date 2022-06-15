@@ -52,6 +52,7 @@ class ConnectionController extends GetxController {
       list = <ConnectionModel>[];
     }
     int i = 0;
+    listServers.clear();
     list.forEach((element) {
       listServers.add(SaveServer(
           id: ++i,

@@ -61,6 +61,6 @@ class EIAPIUserLoginDatasource implements UserLoginDatasource {
 
   saveToken(token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token);
+    await prefs.setString('token' + app_selected_workspace_name, token);
   }
 }

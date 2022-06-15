@@ -17,7 +17,9 @@ class ListConnectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
-        Container(height: 600, child: Obx(() => buildListView(context))),
+        Container(
+            height: MediaQuery.of(context).size.height * 0.85,
+            child: Obx(() => buildListView(context))),
         FloatingActionButton(
           onPressed: () async {
             Navigator.push(
@@ -31,56 +33,6 @@ class ListConnectionPage extends StatelessWidget {
     );
   }
 
-/**
- * 
- 
-Container(
-            height: MediaQuery.of(context).size.height * 0.60,
-            decoration:
-                BoxDecoration(color: Theme.of(context).colorScheme.background),
-            child: Padding(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Container(
-                              height: 200,
-                              child: ListView(children: [
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    'Lista de conexões',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  subtitle: Text(
-                                    'Selecione abaixo a conexão que deseja administrar.',
-                                    style: TextStyle(fontSize: 11),
-                                  ),
-                                ),
-
-                                Padding(
-                                  padding: const EdgeInsets.all(18.0),
-                                  child: Row(children: [
-                                    const Spacer(),
-                                    FloatingActionButton(
-                                      onPressed: () async {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Icon(Icons.add),
-                                    )
-                                  ]),
-                                )
-                              ])))
-                    ]))
-
- */
-
   Widget buildListView(BuildContext context) {
     return ListView.builder(
         itemCount: _connectionController.listServers.length,
@@ -91,9 +43,53 @@ Container(
         });
   }
 
+  Widget _offsetPopup(String serverName) => PopupMenuButton<int>(
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            value: 1,
+            child: Text(
+              "Excluir token e refazer login",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+        onSelected: (value) async {
+          print("Removing $value $serverName");
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.remove('token' + serverName);
+          _connectionController.getConnectionAll();
+        },
+        icon: Icon(Icons.token),
+        offset: Offset(0, 30),
+      );
+
+  Future<String> _trailingHasToken(String serverName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token' + serverName) ?? '';
+    if (token == '') {
+      return '';
+    } else {
+      return token;
+    }
+  }
+
   ListTile buildListTile(BuildContext context, SaveServer saveServer) {
     return ListTile(
         leading: Icon(Icons.storage),
+        trailing: FutureBuilder(
+          future: _trailingHasToken(saveServer.name),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data != '') {
+                return _offsetPopup(saveServer.name); //Icon(Icons.token);
+              }
+            }
+            return Container(
+              width: 10,
+              height: 10,
+            );
+          },
+        ),
         tileColor: saveServer.working
             ? Color.fromARGB(255, 156, 193, 242)
             : Color.fromARGB(255, 129, 222, 214),
@@ -101,7 +97,9 @@ Container(
         subtitle: Text(saveServer.url),
         onTap: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          var token = prefs.getString('token') ?? '';
+          app_selected_workspace_name = saveServer.name;
+          var token =
+              prefs.getString('token' + app_selected_workspace_name) ?? '';
           _connectionController.process(saveServer);
           if (token == '') {
             Navigator.push(

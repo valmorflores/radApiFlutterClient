@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import '../../../../core/ui/layout/my_layout.dart';
-import '../../../../global/repositories/login_repository.dart';
+
 import '../../../../modules/keys/domain/repositories/key_repository.dart';
 import '../../../../modules/keys/domain/usecases/get_by_key.dart';
 import '../../../../modules/keys/external/api/eiapi_key_datasource.dart';
@@ -121,7 +121,7 @@ class _ProfileMainState extends State<ProfileMain> {
   }
 
   Future<bool> valid() async {
-    return await LoginRepository().isValidKey(app_userkey);
+    return true;
   }
 
   _emailAnalise() {
@@ -612,7 +612,6 @@ class _ProfileMainState extends State<ProfileMain> {
     final String resultKey = '$result';
     if (result != "") {
       setState(() async {
-        await LoginRepository().setUserKey(resultKey);
         valid();
       });
     }

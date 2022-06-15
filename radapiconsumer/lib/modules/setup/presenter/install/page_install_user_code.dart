@@ -1,4 +1,3 @@
-import '/global/repositories/login_repository.dart';
 import '/global/resources/kconstants.dart';
 import '/modules/setup/external/api/mgr_device_repository.dart';
 import '/modules/setup/infra/models/device_model.dart';
@@ -154,13 +153,7 @@ class _PageInstallUserCodeState extends State<PageInstallUserCode> {
   }
 
   Future<bool> fetchForm() async {
-    if (_formKey.currentState!.validate()) {
-      return await LoginRepository().isValidKey(_theInputKey).then((value) {
-        debugPrint('f9898 - O valor é ${value}');
-        saveKeyToWorkspace(_theInputKey);
-        return value;
-      });
-    }
+    if (_formKey.currentState!.validate()) {}
     return true;
   }
 
