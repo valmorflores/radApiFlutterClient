@@ -33,7 +33,7 @@ class WksCustomDio {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        String? token = prefs.getString('token');
+        String? token = prefs.getString('token$app_selected_workspace_name');
         _debugDio
             ? debugPrint('f7498 - onRequest, preparing request parameters')
             : null;

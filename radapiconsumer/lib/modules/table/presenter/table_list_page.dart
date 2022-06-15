@@ -17,6 +17,25 @@ class TableListPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Tabelas disponíveis'),
+          actions: <Widget>[
+            FutureBuilder(
+              future: _tableController.getTableAllData(),
+              builder: (context, snapshot) => Container(
+                width: 10,
+                height: 10,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                // do something
+                _tableController.getTableAllData();
+              },
+            )
+          ],
         ),
         body: Column(children: [
           Container(height: 600, child: Obx(() => buildListView(context))),

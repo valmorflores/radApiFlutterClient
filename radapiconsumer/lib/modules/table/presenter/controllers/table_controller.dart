@@ -31,6 +31,7 @@ class TableController extends GetxController {
     if (result.isRight()) {
       var info = (result as Right).value;
       final List<TableModel> _myUrlModel = info;
+      tableList.clear();
       _myUrlModel.forEach((element) {
         //selectedStaffId = element.staffid ?? 0;
         tableList.add(element);

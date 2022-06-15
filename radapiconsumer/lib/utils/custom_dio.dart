@@ -27,7 +27,7 @@ class CustomDio {
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
+      String? token = prefs.getString('token$app_selected_workspace_name');
       if (token != null) {
         if (token != "") {
           options.headers['Authorization'] = 'Bearer ' + token;

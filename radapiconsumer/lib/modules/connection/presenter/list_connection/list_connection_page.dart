@@ -56,7 +56,7 @@ class ListConnectionPage extends StatelessWidget {
         onSelected: (value) async {
           print("Removing $value $serverName");
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.remove('token' + serverName);
+          prefs.remove('token$serverName');
           _connectionController.getConnectionAll();
         },
         icon: Icon(Icons.token),
@@ -65,7 +65,7 @@ class ListConnectionPage extends StatelessWidget {
 
   Future<String> _trailingHasToken(String serverName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token' + serverName) ?? '';
+    String token = prefs.getString('token$serverName') ?? '';
     if (token == '') {
       return '';
     } else {
@@ -99,7 +99,7 @@ class ListConnectionPage extends StatelessWidget {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           app_selected_workspace_name = saveServer.name;
           var token =
-              prefs.getString('token' + app_selected_workspace_name) ?? '';
+              prefs.getString('token$app_selected_workspace_name') ?? '';
           _connectionController.process(saveServer);
           if (token == '') {
             Navigator.push(

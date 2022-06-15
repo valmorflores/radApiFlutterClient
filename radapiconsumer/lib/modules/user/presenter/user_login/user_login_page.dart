@@ -97,7 +97,8 @@ class UserLoginPage extends StatelessWidget {
                               );
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
-                              var token = prefs.getString('token');
+                              var token = prefs.getString(
+                                  'token$app_selected_workspace_name');
                               var isNotEmpty = token?.isNotEmpty;
                               if (isNotEmpty!) {
                                 await Navigator.pushReplacement(
