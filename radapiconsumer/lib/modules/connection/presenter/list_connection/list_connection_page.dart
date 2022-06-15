@@ -101,7 +101,7 @@ Container(
         subtitle: Text(saveServer.url),
         onTap: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          var token = prefs.getString('token');
+          var token = prefs.getString('token') ?? '';
           _connectionController.process(saveServer);
           if (token == '') {
             Navigator.push(
