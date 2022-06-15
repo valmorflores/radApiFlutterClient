@@ -16,10 +16,29 @@ class TableFieldListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _tableController.refreshAll(tableName);
     return Scaffold(
         appBar: AppBar(
           title: Text('Estrutura da tabela [' + this.tableName + ']'),
+          actions: <Widget>[
+            FutureBuilder(
+              future: _tableController.refreshAll(this.tableName),
+              builder: (context, snapshot) => Container(
+                width: 10,
+                height: 10,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                // do something
+                //_tableController.getTableAll(this.tableName);
+                _tableController.refreshAll(this.tableName);
+              },
+            )
+          ],
         ),
         body: Column(children: [
           Container(height: 600, child: Obx(() => buildListView(context))),
