@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:radapiconsumer/modules/table/infra/models/table_model.dart';
 
+import '../../table_field/presenter/table_field_list_page.dart';
 import 'controllers/table_controller.dart';
 
 class TableListPage extends StatelessWidget {
@@ -37,11 +38,14 @@ class TableListPage extends StatelessWidget {
         leading: Icon(Icons.grid_view),
         title: Text(_tableModel.name ?? ''),
         onTap: () {
-          /*_tableController.process(saveServer);
+          /*_tableController.process(saveServer);*/
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => UserLoginPage(0)),
-          );*/
+            MaterialPageRoute(
+                builder: (context) => TableFieldListPage(
+                      tableName: _tableModel.name ?? '',
+                    )),
+          );
         });
   }
 }
