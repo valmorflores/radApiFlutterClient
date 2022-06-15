@@ -21,7 +21,10 @@ class EIAPITableFieldDatasource implements TableFieldDatasource {
       var dados = res.data['data'];
       dados.forEach((item) {
         tableFields.add(TableFieldModel(
-            id: 0, name: item['name'], type: item['type'], size: item['size']));
+            id: 0,
+            name: item['name'],
+            type: item['type'],
+            size: item['size'] == '' ? 0 : int.parse(item['size'] ?? '0')));
       });
       debugPrint('f1902 - Saving local table...');
       SharedPreferences prefs = await SharedPreferences.getInstance();
