@@ -20,6 +20,7 @@ class UserLoginPage extends StatelessWidget {
     _passwordController.text = '';
 
     return Scaffold(
+        appBar: AppBar(title: Text('Login na base')),
         body: Container(
             height: MediaQuery.of(context).size.height * 0.60,
             decoration:
