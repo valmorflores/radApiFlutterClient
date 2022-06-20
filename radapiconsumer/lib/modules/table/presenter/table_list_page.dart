@@ -38,7 +38,9 @@ class TableListPage extends StatelessWidget {
           ],
         ),
         body: Column(children: [
-          Container(height: 600, child: Obx(() => buildListView(context))),
+          Container(
+              height: MediaQuery.of(context).size.height - 100,
+              child: Obx(() => buildListView(context))),
         ]));
   }
 

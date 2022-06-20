@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:radapiconsumer/modules/table/infra/models/table_model.dart';
 
-import '../../table_data/presenter/table_data_list_page.dart';
-import '../infra/models/table_field_model.dart';
-import 'controllers/table_field_controller.dart';
+import '../infra/models/table_data_model.dart';
+import 'controllers/table_data_controller.dart';
 
-class TableFieldListPage extends StatelessWidget {
-  TableFieldController _tableController = Get.put(TableFieldController());
+class TableDataListPage extends StatelessWidget {
+  TableDataController _tableController = Get.put(TableDataController());
 
   String tableName;
 
-  TableFieldListPage({required this.tableName, super.key});
+  TableDataListPage({required this.tableName, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Estrutura da tabela [' + this.tableName + ']'),
+          title: Text('Dados da tabela [' + this.tableName + ']'),
           actions: <Widget>[
             FutureBuilder(
               future: _tableController.refreshAll(this.tableName),
@@ -47,12 +45,13 @@ class TableFieldListPage extends StatelessWidget {
               TextButton(
                 child: Text('Dados'),
                 onPressed: () {
-                  Navigator.push(
+                  //this.tableName
+                  /*Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            TableDataListPage(tableName: tableName)),
+                        builder: (context) => TableDataPage(this.tableName)),
                   );
+                  */
                 },
               )
             ],
@@ -74,7 +73,7 @@ class TableFieldListPage extends StatelessWidget {
   }
 
   ListTile buildListTile(
-      BuildContext context, TableFieldModel _tableFieldModel) {
+      BuildContext context, TableDataModel _tableFieldModel) {
     return ListTile(
         leading: Icon(Icons.edit_note),
         title: Text(_tableFieldModel.name ?? ''),
