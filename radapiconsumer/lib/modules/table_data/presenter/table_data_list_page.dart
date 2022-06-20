@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import '../infra/models/table_data_model.dart';
+import '../infra/models/table_record_model.dart';
 import 'controllers/table_data_controller.dart';
 
 class TableDataListPage extends StatelessWidget {
@@ -64,25 +65,20 @@ class TableDataListPage extends StatelessWidget {
 
   Widget buildListView(BuildContext context) {
     return ListView.builder(
-        itemCount: _tableController.tableList.length,
+        itemCount: _tableController.tableList[0].records?.length,
         itemBuilder: (context, index) {
-          final tableData = _tableController.tableList.elementAt(index);
-
+          final tableData = _tableController.tableList[0].records
+              ?.elementAt(index) as TableRecordModel;
           return buildListTile(context, tableData);
         });
   }
 
   ListTile buildListTile(
-      BuildContext context, TableDataModel _tableFieldModel) {
+      BuildContext context, TableRecordModel _tableFieldModel) {
     return ListTile(
         leading: Icon(Icons.edit_note),
-        title: Text(_tableFieldModel.name ?? ''),
-        subtitle: Text((_tableFieldModel.type ?? '') +
-            ' ' +
-            (_tableFieldModel.size ?? '').toString() +
-            ' ' +
-            (_tableFieldModel.default_data != null ? ' Default ' : '') +
-            (_tableFieldModel.default_data ?? '').toString()),
+        title: Text(_tableFieldModel.data?[0].fieldData ?? ''),
+        subtitle: Text(_tableFieldModel.data?[1].fieldData ?? ''),
         onTap: () {
           /*_tableController.process(saveServer);
           Navigator.push(
@@ -91,4 +87,21 @@ class TableDataListPage extends StatelessWidget {
           );*/
         });
   }
+
+  Row buildRowData(BuildContext context, TableRecordModel _tableFieldModel) {
+    return Row(
+      children: [],
+    );
+  }
 }
+
+/**
+ * 
+ * 
+ * (_tableFieldModel.type ?? '') +
+            ' ' +
+            (_tableFieldModel.size ?? '').toString() +
+            ' ' +
+            (_tableFieldModel.default_data != null ? ' Default ' : '') +
+            (_tableFieldModel.default_data ?? '').toString()
+ */

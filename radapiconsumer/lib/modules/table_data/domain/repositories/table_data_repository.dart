@@ -4,6 +4,5 @@ import '../entities/table_data_result.dart';
 import '../errors/errors.dart';
 
 abstract class TableDataRepository {
-  Future<Either<Failure, List<TableDataResult>>> getTableFieldAll(
-      String tableName);
+  Future<Either<Failure, TableDataResult>> getTableAll(String tableName);
 }

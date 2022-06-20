@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import '../../domain/usecases/get_table_field_all.dart';
+import '../../domain/usecases/get_table_all.dart';
 import '../../domain/repositories/table_data_repository.dart';
 import '../../external/api/eiapi_table_data_datasource.dart';
 import '../../infra/datasource/table_data_datasource.dart';
 import '../../infra/models/table_data_model.dart';
-import '../../infra/repository/table_field_repository_impl.dart';
+import '../../infra/repository/table_data_repository_impl.dart';
 import '/modules/table/infra/models/table_model.dart';
 import '/modules/update/presenter/controllers/url_controller.dart';
 import '/utils/wks_custom_dio.dart';
@@ -24,21 +24,23 @@ class TableDataController extends GetxController {
 
   final dio = WksCustomDio.withAuthentication().instance;
   late TableDataDatasource datasource;
-  late TableDataRepository tableFieldRepository;
+  late TableDataRepository tableDataRepository;
 
-  late GetTableFieldAll getTableAll;
+  late GetTableAll getTableAll;
 
   getTableFieldAllData(String tableName) async {
     var result = await _getTableFieldAll(tableName);
     tableList.clear();
     if (result.isRight()) {
       var info = (result as Right).value;
-      final List<TableDataModel> _myUrlModel = info;
-      _myUrlModel.forEach((element) {
+      final TableDataModel _myUrlModel = info;
+      tableList.add(_myUrlModel);
+      /*_myUrlModel.forEach((element) {
         //selectedStaffId = element.staffid ?? 0;
         tableList.add(element);
         count++;
       });
+      */
     }
     update();
   }
@@ -46,7 +48,7 @@ class TableDataController extends GetxController {
   _getTableFieldAll(String tableName) async {
     debugPrint('f8004 - get table all via controller ');
     GetTableFieldAllImpl getTableFieldAllImpl =
-        GetTableFieldAllImpl(tableFieldRepository);
+        GetTableFieldAllImpl(tableDataRepository);
     return await getTableFieldAllImpl.call(tableName);
   }
 
@@ -56,8 +58,8 @@ class TableDataController extends GetxController {
 
     // Links for data get
     datasource = EIAPITableDataDatasource(dio);
-    tableFieldRepository = TableFieldRepositoryImpl(datasource);
-    getTableAll = GetTableFieldAllImpl(tableFieldRepository);
+    tableDataRepository = TableDataRepositoryImpl(datasource);
+    getTableAll = GetTableFieldAllImpl(tableDataRepository);
 
     // onInit
     super.onInit();

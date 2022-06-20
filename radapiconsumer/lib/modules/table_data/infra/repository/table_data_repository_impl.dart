@@ -7,22 +7,23 @@ import '../../domain/repositories/table_data_repository.dart';
 import '../datasource/table_data_datasource.dart';
 import '../models/table_data_model.dart';
 
-class TableFieldRepositoryImpl implements TableDataRepository {
+class TableDataRepositoryImpl implements TableDataRepository {
   final TableDataDatasource datasource;
 
-  TableFieldRepositoryImpl(this.datasource);
+  TableDataRepositoryImpl(this.datasource);
 
   @override
-  Future<Either<Failure, List<TableDataResult>>> getTableFieldAll(String tableName) async {
-    List<TableDataModel> list;
+  Future<Either<Failure, TableDataResult>> getTableAll(
+      String tableName) async {
+    TableDataModel dataModel;
     try {
-      list = await datasource.getAll(tableName);
+      dataModel = await datasource.getAll(tableName);
     } on DatasourceError catch (e) {
       return left(e);
     } catch (e) {
       debugPrint(e.toString());
       return left(ErrorSearch());
     }
-    return list == null ? left(DatasourceResultNull()) : right(list);
+    return dataModel == null ? left(DatasourceResultNull()) : right(dataModel);
   }
 }

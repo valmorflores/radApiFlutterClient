@@ -4,24 +4,24 @@ import '../errors/errors.dart';
 
 import '../repositories/table_data_repository.dart';
 
-mixin GetTableFieldAll {
-  Future<Either<Failure, List<TableDataResult>>> call(String tableName);
+mixin GetTableAll {
+  Future<Either<Failure, TableDataResult>> call(String tableName);
 }
 
 //? @Injectable(singleton: false)
-class GetTableFieldAllImpl implements GetTableFieldAll {
+class GetTableFieldAllImpl implements GetTableAll {
   final TableDataRepository repository;
 
   GetTableFieldAllImpl(this.repository);
 
   @override
-  Future<Either<Failure, List<TableDataResult>>> call(String tableName) async {
+  Future<Either<Failure, TableDataResult>> call(String tableName) async {
     var option = optionOf(tableName);
 
     return option.fold(() => Left(InvalidSearchText()), (i) async {
-      var result = await repository.getTableFieldAll(tableName);
+      var result = await repository.getTableAll(tableName);
       return result.fold(
-          (l) => left(l), (r) => r.isEmpty ? left(EmptyList()) : right(r));
+          (l) => left(l), (r) => r == null ? left(NoRecordsFound()) : right(r));
     });
   }
 }
