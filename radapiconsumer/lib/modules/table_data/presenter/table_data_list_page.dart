@@ -28,7 +28,7 @@ class TableDataListPage extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.refresh,
                 color: Colors.white,
               ),
@@ -96,6 +96,7 @@ class TableDataListPage extends StatelessWidget {
 }
 
 /**
+ * 
  * 
  * 
  * (_tableFieldModel.type ?? '') +
