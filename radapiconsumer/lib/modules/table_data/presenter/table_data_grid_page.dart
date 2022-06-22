@@ -1,10 +1,14 @@
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:radapiconsumer/modules/table_field/infra/models/table_field_model.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:math' as math;
 
+import '../infra/models/table_data_model.dart';
+import '../infra/models/table_record_model.dart';
 import 'controllers/table_data_controller.dart';
 
 /// The application that contains datagrid on it.
@@ -32,129 +36,22 @@ class _DataGridSampleState extends State<DataGridSample> {
   _SampleDataGridSource freezePanesDataGridSource = _SampleDataGridSource();
 
   List<GridColumn> getColumns() {
+    TableDataModel data = tableController.tableList[0];
     List<GridColumn> columns;
-    columns = <GridColumn>[
-      GridColumn(
-          columnName: 'id',
+    columns = <GridColumn>[];
+    data.fields?.forEach((element) {
+      columns.add(GridColumn(
+          columnName: element.name ?? '',
           label: Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.all(8.0),
             child: Text(
-              'ID',
+              element.name ?? '',
               overflow: TextOverflow.ellipsis,
             ),
-          )),
-      GridColumn(
-          columnName: 'id1',
-          label: Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'ID',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'productId',
-          label: Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Product ID',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'productId1',
-          label: Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Product ID',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'name',
-          label: Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Customer Name',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'name1',
-          label: Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Customer Name',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'product',
-          label: Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Product',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'product1',
-          label: Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Product',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'orderDate',
-          label: Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Order Date',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'quantity',
-          label: Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Quantity',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'city',
-          label: Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'City',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-      GridColumn(
-          columnName: 'unitPrice',
-          label: Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Unit Price',
-              overflow: TextOverflow.ellipsis,
-            ),
-          )),
-    ];
+          )));
+    });
+
     return columns;
   }
 
@@ -204,49 +101,38 @@ class _DataGridSampleState extends State<DataGridSample> {
   }
 }
 
-class _Product {
-  _Product(this.id, this.productId, this.product, this.quantity, this.unitPrice,
-      this.city, this.orderDate, this.name);
-  final int id;
-  final int productId;
-  final String product;
-  final int quantity;
-  final double unitPrice;
-  final String city;
-  final DateTime orderDate;
-  final String name;
-}
-
 class _SampleDataGridSource extends DataGridSource {
+  final TableDataController _tableController = Get.put(TableDataController());
+
   _SampleDataGridSource() {
-    products = getProducts(20);
+    products = getProducts();
     buildDataGridRows();
+  }
+
+  getProducts() {
+    return _tableController.tableList[0].records;
+  }
+
+  getFields() {
+    return _tableController.tableList[0].fields;
   }
 
   final math.Random random = math.Random();
 
   List<DataGridRow> dataGridRows = [];
 
-  List<_Product> products = [];
+  List<TableRecordModel> products = [];
 
   // Building DataGridRows
 
   void buildDataGridRows() {
+    List<TableFieldModel> fields = getFields();
+    List<DataGridCell> cells = [];
     dataGridRows = products.map<DataGridRow>((dataGridRow) {
-      return DataGridRow(cells: [
-        DataGridCell(columnName: 'id', value: dataGridRow.id),
-        DataGridCell(columnName: 'id1', value: dataGridRow.id),
-        DataGridCell(columnName: 'productId', value: dataGridRow.productId),
-        DataGridCell(columnName: 'productId1', value: dataGridRow.productId),
-        DataGridCell(columnName: 'name', value: dataGridRow.name),
-        DataGridCell(columnName: 'name1', value: dataGridRow.name),
-        DataGridCell(columnName: 'product', value: dataGridRow.product),
-        DataGridCell(columnName: 'product1', value: dataGridRow.product),
-        DataGridCell(columnName: 'orderDate', value: dataGridRow.orderDate),
-        DataGridCell(columnName: 'quantity', value: dataGridRow.quantity),
-        DataGridCell(columnName: 'city', value: dataGridRow.city),
-        DataGridCell(columnName: 'unitPrice', value: dataGridRow.unitPrice),
-      ]);
+      fields.forEach((element) {
+        cells.add(DataGridCell(columnName: 'id', value: dataGridRow.data));
+      });
+      return DataGridRow(cells: cells);
     }).toList(growable: false);
   }
 
@@ -357,144 +243,5 @@ class _SampleDataGridSource extends DataGridSource {
         ),
       ),
     ]);
-  }
-
-  // Products data's
-
-  final List<String> _products = <String>[
-    'Lax',
-    'Chocolate',
-    'Syrup',
-    'Chai',
-    'Bags',
-    'Meat',
-    'Filo',
-    'Cashew',
-    'Walnuts',
-    'Geitost',
-    'Cote de',
-    'Crab',
-    'Chang',
-    'Cajun',
-    'Gum',
-    'Filo',
-    'Cashew',
-    'Walnuts',
-    'Geitost',
-    'Bag',
-    'Meat',
-    'Filo',
-    'Cashew',
-    'Geitost',
-    'Cote de',
-    'Crab',
-    'Chang',
-    'Cajun',
-    'Gum',
-  ];
-
-  final List<String> cities = <String>[
-    'Bruxelles',
-    'Rosario',
-    'Recife',
-    'Graz',
-    'Montreal',
-    'Tsawassen',
-    'Campinas',
-    'Resende',
-  ];
-
-  final List<int> productIds = <int>[
-    3524,
-    2523,
-    1345,
-    5243,
-    1803,
-    4932,
-    6532,
-    9475,
-    2435,
-    2123,
-    3652,
-    4523,
-    4263,
-    3527,
-    3634,
-    4932,
-    6532,
-    9475,
-    2435,
-    2123,
-    6532,
-    9475,
-    2435,
-    2123,
-    4523,
-    4263,
-    3527,
-    3634,
-    4932,
-  ];
-
-  final List<DateTime> orderDates = <DateTime>[
-    DateTime.now(),
-    DateTime(2002, 8, 27),
-    DateTime(2015, 7, 4),
-    DateTime(2007, 4, 15),
-    DateTime(2010, 12, 23),
-    DateTime(2010, 4, 20),
-    DateTime(2004, 6, 13),
-    DateTime(2008, 11, 11),
-    DateTime(2005, 7, 29),
-    DateTime(2009, 4, 5),
-    DateTime(2003, 3, 20),
-    DateTime(2011, 3, 8),
-    DateTime(2013, 10, 22),
-  ];
-
-  List<String> names = [
-    'Kyle',
-    'Gina',
-    'Irene',
-    'Katie',
-    'Michael',
-    'Oscar',
-    'Ralph',
-    'Torrey',
-    'William',
-    'Bill',
-    'Daniel',
-    'Frank',
-    'Brenda',
-    'Danielle',
-    'Fiona',
-    'Howard',
-    'Jack',
-    'Larry',
-    'Holly',
-    'Jennifer',
-    'Liz',
-    'Pete',
-    'Steve',
-    'Vince',
-    'Zeke'
-  ];
-
-  List<_Product> getProducts(int count) {
-    final List<_Product> productData = <_Product>[];
-    for (int i = 0; i < count; i++) {
-      productData.add(
-        _Product(
-            i + 1000,
-            productIds[i],
-            _products[i],
-            random.nextInt(20),
-            70.0 + random.nextInt(100),
-            cities[i < cities.length ? i : random.nextInt(cities.length - 1)],
-            orderDates[random.nextInt(orderDates.length - 1)],
-            names[i]),
-      );
-    }
-    return productData;
   }
 }

@@ -39,7 +39,7 @@ class EIAPITableDataDatasource implements TableDataDatasource {
         tableRecords.add(oneRecord);
       });
     });
-    return TableDataModel(records: tableRecords);
+    return TableDataModel(fields: tableFields, records: tableRecords);
   }
 
   Future<List<TableFieldModel>> dataFields(String tableName) async {
