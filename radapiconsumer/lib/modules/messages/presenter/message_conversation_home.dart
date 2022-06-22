@@ -74,7 +74,7 @@ class _MessageConversationHomeState extends State<MessageConversationHome> {
       debugPrint('f7872 - :: ${(element as MessageConversationModel).message}');
     });
     // --
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
+    //WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToBottom());
 
     // Verifica mensagens a cada 5 segundos
     const oneSec = const Duration(seconds: 5);

@@ -18,6 +18,7 @@ class TableDataController extends GetxController {
   RxString urlImage = ''.obs;
 
   late final tableList = <TableDataModel>[].obs;
+  RxString tableName = ''.obs;
 
   late int selectedStaffId;
   late String selectedTableName;
@@ -27,6 +28,10 @@ class TableDataController extends GetxController {
   late TableDataRepository tableDataRepository;
 
   late GetTableAll getTableAll;
+
+  setTableName(String newTableName) {
+    tableName.value = newTableName;
+  }
 
   getTableFieldAllData(String tableName) async {
     var result = await _getTableFieldAll(tableName);

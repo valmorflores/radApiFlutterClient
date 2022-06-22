@@ -28,7 +28,7 @@ class EIAPITableFieldDatasource implements TableFieldDatasource {
                 ? 0
                 : item['size'].toString() == ''
                     ? 0
-                    : int.parse(item['size'].toString() ?? '0')));
+                    : int.parse(item['size']?.toString() ?? '0')));
       });
       debugPrint('f1902 - Saving local table...');
       SharedPreferences prefs = await SharedPreferences.getInstance();

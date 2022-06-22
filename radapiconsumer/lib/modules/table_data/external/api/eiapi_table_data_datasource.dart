@@ -55,7 +55,7 @@ class EIAPITableDataDatasource implements TableDataDatasource {
                 ? 0
                 : item['size'].toString() == ''
                     ? 0
-                    : int.parse(item['size'].toString() ?? '0')));
+                    : int.parse(item['size']?.toString() ?? '0')));
       });
       return tableFields;
     });
