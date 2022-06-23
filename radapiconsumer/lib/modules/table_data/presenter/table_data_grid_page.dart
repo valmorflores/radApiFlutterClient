@@ -110,7 +110,11 @@ class _SampleDataGridSource extends DataGridSource {
   }
 
   getProducts() {
-    return _tableController.tableList[0].records;
+    if (_tableController.tableList.isNotEmpty) {
+      return _tableController.tableList[0].records;
+    } else {
+      return [];
+    }
   }
 
   getFields() {
