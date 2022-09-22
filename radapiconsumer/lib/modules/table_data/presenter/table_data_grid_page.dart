@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:radapiconsumer/modules/table_field/infra/models/table_field_model.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:math' as math;
 
 import '../infra/models/table_data_model.dart';
@@ -147,7 +145,29 @@ class _SampleDataGridSource extends DataGridSource {
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
-    return DataGridRowAdapter(cells: [
+    List<TableFieldModel> fields = getFields();
+    List<Widget> cellsTemp = [];
+    fields.forEach((element) {
+      cellsTemp.add(
+        Container(
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            row.getCells()[element.id ?? 0].value.toString(),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      );
+    });
+    return DataGridRowAdapter(cells: cellsTemp);
+  }
+}
+
+
+/**
+ * 
+ * 
+ * [
       Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.all(8.0),
@@ -212,14 +232,14 @@ class _SampleDataGridSource extends DataGridSource {
           overflow: TextOverflow.ellipsis,
         ),
       ),
-      Container(
+      /*Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.all(8.0),
         child: Text(
           DateFormat('MM/dd/yyyy').format(row.getCells()[8].value).toString(),
           overflow: TextOverflow.ellipsis,
         ),
-      ),
+      ),*/
       Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.all(8.0),
@@ -237,6 +257,38 @@ class _SampleDataGridSource extends DataGridSource {
         ),
       ),
       Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          row.getCells()[7].value.toString(),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          row.getCells()[2].value.toString(),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          row.getCells()[2].value.toString(),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          row.getCells()[2].value.toString(),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      /*Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.all(8.0),
         child: Text(
@@ -245,7 +297,6 @@ class _SampleDataGridSource extends DataGridSource {
               .toString(),
           overflow: TextOverflow.ellipsis,
         ),
-      ),
-    ]);
-  }
-}
+      ),*/
+
+ */
